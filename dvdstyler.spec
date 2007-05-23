@@ -1,16 +1,17 @@
 %define name	dvdstyler
 %define version	1.5
-%define release %mkrel 0.beta7.1
-%define src_release b7_1
+%define release %mkrel 1
 
 Name: 	 	%{name}
 Summary: 	DVD authoring GUI
 Version: 	%{version}
 Release: 	%{release}
 Epoch:		1
-
-Source:		http://prdownloads.sourceforge.net/dvdstyler/DVDStyler-%{version}%{src_release}.tar.bz2
+Source:		http://prdownloads.sourceforge.net/dvdstyler/DVDStyler-%{version}.tar.bz2
+# This can be dropped when 2007 goes out of maintenance
+%if %mdkversion > 200700
 Patch0:		dvdstyler-genisoimage.patch
+%endif
 URL:		http://dvdstyler.sourceforge.net/
 License:	GPL
 Group:		Video
@@ -18,8 +19,16 @@ BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	pkgconfig ImageMagick
 BuildRequires:	wxsvg-devel >= 1.0-0.beta6
 BuildRequires:	kdelibs-common libgnomeui2-devel automake1.8
-BuildRequires:	dvdauthor mjpegtools netpbm mpgtx cdrkit-genisoimage dvd+rw-tools
-Requires:	dvdauthor mjpegtools netpbm mpgtx cdrkit-genisoimage dvd+rw-tools
+BuildRequires:	dvdauthor mjpegtools netpbm mpgtx dvd+rw-tools
+Requires:	dvdauthor mjpegtools netpbm mpgtx dvd+rw-tools
+# This can be dropped when 2007 goes out of maintenance
+%if %mdkversion <= 200700
+BuildRequires:	mkisofs
+Requires:	mkisofs
+%else
+BuildRequires:	cdrkit-genisoimage
+Requires:	cdrkit-genisoimage
+%endif
 
 %description
 The main DVDStyler features are:
@@ -33,8 +42,11 @@ The main DVDStyler features are:
     * you can change post command for each movie
 
 %prep
-%setup -q -n DVDStyler-%{version}%{src_release}
+%setup -q -n DVDStyler-%{version}
+# This can be dropped when 2007 goes out of maintenance
+%if %mdkversion > 200700
 %patch0
+%endif
 
 #needed by patch0
 ./autogen.sh
