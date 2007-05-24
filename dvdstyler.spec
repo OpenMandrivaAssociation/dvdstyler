@@ -18,14 +18,8 @@ BuildRequires:	wxsvg-devel >= 1.0-0.beta6
 BuildRequires:	kdelibs-common libgnomeui2-devel automake1.8
 BuildRequires:	dvdauthor mjpegtools netpbm mpgtx dvd+rw-tools
 Requires:	dvdauthor mjpegtools netpbm mpgtx dvd+rw-tools
-# This can be dropped when 2007 goes out of maintenance
-%if %mdkversion <= 200700
-BuildRequires:	mkisofs
-Requires:	mkisofs
-%else
 BuildRequires:	cdrkit-genisoimage
 Requires:	cdrkit-genisoimage
-%endif
 
 %description
 The main DVDStyler features are:
@@ -40,10 +34,7 @@ The main DVDStyler features are:
 
 %prep
 %setup -q -n DVDStyler-%{version}
-# This can be dropped when 2007 goes out of maintenance
-%if %mdkversion > 200700
 %patch0
-%endif
 
 #needed by patch0
 ./autogen.sh
