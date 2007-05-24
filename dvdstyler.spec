@@ -60,12 +60,6 @@ rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
 rm -fr %buildroot/%{_docdir}
 
-#menu
-mkdir -p $RPM_BUILD_ROOT%{_menudir}
-cat << EOF > $RPM_BUILD_ROOT%{_menudir}/%{name}
-?package(%{name}): command="%{name}" icon="%{name}.png" needs="x11" title="DVDStyler" longtitle="DVD authoring GUI" section="Multimedia/Video" xdg="true"
-EOF
-
 mkdir -p %{buildroot}%{_datadir}/applications
 cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
 [Desktop Entry]
@@ -103,11 +97,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog README TODO
 %{_bindir}/%name
 %{_datadir}/%name
+%{_datadir}/pixmaps/%{name}.*
 %{_datadir}/applications/mandriva-%{name}.desktop
-%{_menudir}/%name
 %{_liconsdir}/%name.png
 %{_iconsdir}/%name.png
 %{_miconsdir}/%name.png
-
-
-
