@@ -69,6 +69,13 @@ convert -size 32x32 src/rc/%name.png $RPM_BUILD_ROOT/%_iconsdir/%name.png
 mkdir -p $RPM_BUILD_ROOT/%_miconsdir
 convert -size 16x16 src/rc/%name.png $RPM_BUILD_ROOT/%_miconsdir/%name.png
 
+#fd.o icons
+
+mkdir -p $RPM_BUILD_ROOT/%_iconsdir/hicolor/{48x48,32x32,16x16}/apps
+convert -size 48x48 src/rc/%name.png $RPM_BUILD_ROOT/%_iconsdir/hicolor/48x48/apps/%name.png
+convert -size 32x32 src/rc/%name.png $RPM_BUILD_ROOT/%_iconsdir/hicolor/32x32/apps/%name.png
+convert -size 16x16 src/rc/%name.png $RPM_BUILD_ROOT/%_iconsdir/hicolor/16x16/apps/%name.png
+
 %find_lang %name
 
 %clean
@@ -76,17 +83,21 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 %update_menus
+%update_icon_cache hicolor
 		
 %postun
 %clean_menus
+%clean_icon_cache hicolor
 
 %files -f %{name}.lang
 %defattr(-,root,root)
 %doc AUTHORS ChangeLog README TODO
 %{_bindir}/%name
 %{_datadir}/%name
-%{_datadir}/pixmaps/%{name}.*
 %{_datadir}/applications/mandriva-%{name}.desktop
 %{_liconsdir}/%name.png
 %{_iconsdir}/%name.png
 %{_miconsdir}/%name.png
+%{_iconsdir}/hicolor/48x48/apps/%name.png
+%{_iconsdir}/hicolor/32x32/apps/%name.png
+%{_iconsdir}/hicolor/16x16/apps/%name.png
