@@ -8,10 +8,7 @@ Version: 	%{version}
 Release: 	%{release}
 Epoch:		1
 Source:		http://prdownloads.sourceforge.net/dvdstyler/DVDStyler-%{version}.tar.bz2
-# This can be dropped when 2007 goes out of maintenance
-%if %mdkversion > 200700
 Patch0:		dvdstyler-genisoimage.patch
-%endif
 URL:		http://dvdstyler.sourceforge.net/
 License:	GPL
 Group:		Video
