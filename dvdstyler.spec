@@ -1,6 +1,6 @@
 %define name	dvdstyler
 %define version	1.5
-%define release %mkrel 1
+%define release %mkrel 2
 
 Name: 	 	%{name}
 Summary: 	DVD authoring GUI
@@ -41,6 +41,10 @@ The main DVDStyler features are:
 %endif
 
 %build
+# Convert .po files to UTF-8: bug #31297 - AdamW 2007/06
+pushd locale
+for i in `file *.po | grep 8859 | cut -d: -f1`; do iconv --from-code=ISO-8859-1 --to-code=UTF-8 $i > $i.new; mv -f $i.new $i; done
+popd
 %configure2_5x --prefix=%_libdir --with-wx-config=%_bindir/wx-config-ansi
 %make
 										
