@@ -16,12 +16,12 @@ Group:		Video
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	pkgconfig ImageMagick
 BuildRequires:	wxsvg-devel >= 1.0-0.beta6
-BuildRequires:	kdelibs-common libgnomeui2-devel automake1.8
+BuildRequires:	kdelibs-common libgnomeui2-devel automake
 BuildRequires:	dvdauthor mjpegtools netpbm mpgtx dvd+rw-tools
 Requires:	dvdauthor mjpegtools netpbm mpgtx dvd+rw-tools
 BuildRequires:	mkisofs
 Requires:	mkisofs
-BuildRequires:	gettext
+BuildRequires:	gettext desktop-file-utils
 
 %description
 The main DVDStyler features are:
@@ -36,11 +36,9 @@ The main DVDStyler features are:
 
 %prep
 %setup -q -n DVDStyler-%{version}_%{relindex}
-%if %mdkversion > 200700
 %patch0
 #needed by patch0
 ./autogen.sh
-%endif
 
 %build
 # Convert .po files to UTF-8: bug #31297 - AdamW 2007/06
@@ -55,18 +53,11 @@ rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
 rm -fr %buildroot/%{_docdir}
 
-mkdir -p %{buildroot}%{_datadir}/applications
-cat > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop << EOF
-[Desktop Entry]
-Name=DVDStyler
-Comment=%{Summary}
-Exec=%{_bindir}/%{name}
-Icon=%{name}
-Terminal=false
-Type=Application
-Categories=X-MandrivaLinux-Multimedia-Video;AudioVideo;Video;AudioVideoEditing;
-Encoding=UTF-8
-EOF
+desktop-file-install --vendor='' \
+	--dir=%buildroot%_datadir/applications \
+	--remove-category='Application' \
+	--add-category='Video;AudioVideoEditing' \
+	%buildroot%_datadir/applications/*.desktop
 
 #icons
 mkdir -p $RPM_BUILD_ROOT/%_liconsdir
@@ -101,7 +92,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog README TODO
 %{_bindir}/%name
 %{_datadir}/%name
-%{_datadir}/applications/mandriva-%{name}.desktop
+%{_datadir}/applications/*.desktop
+%{_datadir}/pixmap/*.png
 %{_liconsdir}/%name.png
 %{_iconsdir}/%name.png
 %{_miconsdir}/%name.png
