@@ -1,13 +1,14 @@
 %define name	dvdstyler
-%define version	1.5
-%define release %mkrel 2
+%define version	1.5.1
+%define relindex 2
+%define release %mkrel 1
 
 Name: 	 	%{name}
 Summary: 	DVD authoring GUI
 Version: 	%{version}
 Release: 	%{release}
 Epoch:		1
-Source:		http://prdownloads.sourceforge.net/dvdstyler/DVDStyler-%{version}.tar.bz2
+Source:		http://prdownloads.sourceforge.net/dvdstyler/DVDStyler-%{version}_%{relindex}.tar.gz
 Patch0:		dvdstyler-genisoimage.patch
 URL:		http://dvdstyler.sourceforge.net/
 License:	GPL
@@ -20,6 +21,7 @@ BuildRequires:	dvdauthor mjpegtools netpbm mpgtx dvd+rw-tools
 Requires:	dvdauthor mjpegtools netpbm mpgtx dvd+rw-tools
 BuildRequires:	mkisofs
 Requires:	mkisofs
+BuildRequires:	gettext
 
 %description
 The main DVDStyler features are:
@@ -33,7 +35,7 @@ The main DVDStyler features are:
     * you can change post command for each movie
 
 %prep
-%setup -q -n DVDStyler-%{version}
+%setup -q -n DVDStyler-%{version}_%{relindex}
 %if %mdkversion > 200700
 %patch0
 #needed by patch0
@@ -43,7 +45,7 @@ The main DVDStyler features are:
 %build
 # Convert .po files to UTF-8: bug #31297 - AdamW 2007/06
 pushd locale
-for i in `file *.po | grep 8859 | cut -d: -f1`; do iconv --from-code=ISO-8859-1 --to-code=UTF-8 $i > $i.new; mv -f $i.new $i; done
+for i in *.po; do msgconv -t UTF-8 $i -o $i.new; mv -f $i.new $i; done
 popd
 %configure2_5x --prefix=%_libdir --with-wx-config=%_bindir/wx-config-ansi
 %make
