@@ -93,7 +93,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/%name
 %{_datadir}/%name
 %{_datadir}/applications/*.desktop
-%{_datadir}/pixmap/*.png
+%{_datadir}/pixmaps/*.png
 %{_liconsdir}/%name.png
 %{_iconsdir}/%name.png
 %{_miconsdir}/%name.png
