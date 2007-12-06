@@ -1,7 +1,7 @@
 %define name	dvdstyler
 %define version	1.5.1
 %define relindex 2
-%define release %mkrel 1
+%define release %mkrel 2
 
 Name: 	 	%{name}
 Summary: 	DVD authoring GUI
