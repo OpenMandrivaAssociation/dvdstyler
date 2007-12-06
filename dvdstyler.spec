@@ -11,7 +11,7 @@ Epoch:		1
 Source:		http://prdownloads.sourceforge.net/dvdstyler/DVDStyler-%{version}_%{relindex}.tar.gz
 Patch0:		dvdstyler-genisoimage.patch
 URL:		http://dvdstyler.sourceforge.net/
-License:	GPL
+License:	GPL+
 Group:		Video
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	pkgconfig ImageMagick
@@ -49,7 +49,7 @@ popd
 %make
 										
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %makeinstall_std
 rm -fr %buildroot/%{_docdir}
 
@@ -57,27 +57,17 @@ desktop-file-install --vendor='' \
 	--dir=%buildroot%_datadir/applications \
 	--remove-category='Application' \
 	--add-category='Video;AudioVideoEditing' \
-	%buildroot%_datadir/applications/*.desktop
+	%{buildroot}%{_datadir}/applications/*.desktop
 
-#icons
-mkdir -p $RPM_BUILD_ROOT/%_liconsdir
-convert -size 48x48 src/rc/%name.png $RPM_BUILD_ROOT/%_liconsdir/%name.png
-mkdir -p $RPM_BUILD_ROOT/%_iconsdir
-convert -size 32x32 src/rc/%name.png $RPM_BUILD_ROOT/%_iconsdir/%name.png
-mkdir -p $RPM_BUILD_ROOT/%_miconsdir
-convert -size 16x16 src/rc/%name.png $RPM_BUILD_ROOT/%_miconsdir/%name.png
+mkdir -p %{buildroot}/%{_iconsdir}/hicolor/{48x48,32x32,16x16}/apps
+convert -size 48x48 src/rc/%{name}.png %{buildroot}/%{_iconsdir}/hicolor/48x48/apps/%{name}.png
+convert -size 32x32 src/rc/%{name}.png %{buildroot}/%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+convert -size 16x16 src/rc/%{name}.png %{buildroot}/%{_iconsdir}/hicolor/16x16/apps/%{name}.png
 
-#fd.o icons
-
-mkdir -p $RPM_BUILD_ROOT/%_iconsdir/hicolor/{48x48,32x32,16x16}/apps
-convert -size 48x48 src/rc/%name.png $RPM_BUILD_ROOT/%_iconsdir/hicolor/48x48/apps/%name.png
-convert -size 32x32 src/rc/%name.png $RPM_BUILD_ROOT/%_iconsdir/hicolor/32x32/apps/%name.png
-convert -size 16x16 src/rc/%name.png $RPM_BUILD_ROOT/%_iconsdir/hicolor/16x16/apps/%name.png
-
-%find_lang %name
+%find_lang %{name}
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %post
 %update_menus
@@ -90,13 +80,10 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(-,root,root)
 %doc AUTHORS ChangeLog README TODO
-%{_bindir}/%name
-%{_datadir}/%name
+%{_bindir}/%{name}
+%{_datadir}/%{name}
 %{_datadir}/applications/*.desktop
 %{_datadir}/pixmaps/*.png
-%{_liconsdir}/%name.png
-%{_iconsdir}/%name.png
-%{_miconsdir}/%name.png
-%{_iconsdir}/hicolor/48x48/apps/%name.png
-%{_iconsdir}/hicolor/32x32/apps/%name.png
-%{_iconsdir}/hicolor/16x16/apps/%name.png
+%{_iconsdir}/hicolor/48x48/apps/%{name}.png
+%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+%{_iconsdir}/hicolor/16x16/apps/%{name}.png
