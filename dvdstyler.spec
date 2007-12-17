@@ -13,7 +13,6 @@ Patch0:		dvdstyler-genisoimage.patch
 URL:		http://dvdstyler.sourceforge.net/
 License:	GPL+
 Group:		Video
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	pkgconfig ImageMagick
 BuildRequires:	wxsvg-devel >= 1.0-0.beta6
 BuildRequires:	kdelibs-common libgnomeui2-devel automake
