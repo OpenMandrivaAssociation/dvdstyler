@@ -22,6 +22,7 @@ Requires:	dvdauthor mjpegtools netpbm mpgtx dvd+rw-tools
 BuildRequires:	mkisofs
 Requires:	mkisofs
 BuildRequires:	gettext desktop-file-utils
+Buildrequires:	libexif-devel
 
 %description
 The main DVDStyler features are:
