@@ -1,7 +1,7 @@
 %define name	dvdstyler
-%define version	1.5.1
-%define relindex 2
-%define release %mkrel 2
+%define version	1.6.1
+%define relindex 1
+%define release %mkrel 1
 
 Name: 	 	%{name}
 Summary: 	DVD authoring GUI
@@ -36,7 +36,7 @@ The main DVDStyler features are:
 
 %prep
 %setup -q -n DVDStyler-%{version}_%{relindex}
-%patch0
+%patch0 -p1
 #needed by patch0
 ./autogen.sh
 
