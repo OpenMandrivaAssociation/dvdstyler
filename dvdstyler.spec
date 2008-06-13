@@ -1,31 +1,42 @@
-%define name	dvdstyler
-%define version	1.6.1
-%define relindex 1
-%define release %mkrel 1
+%define oname	DVDStyler
 
-Name: 	 	%{name}
-Summary: 	DVD authoring GUI
-Version: 	%{version}
-Release: 	%{release}
+Name: 	 	dvdstyler
+Summary: 	DVD authoring application
+Version: 	1.6.2
+Release: 	%mkrel 1
 Epoch:		1
-Source:		http://prdownloads.sourceforge.net/dvdstyler/DVDStyler-%{version}_%{relindex}.tar.gz
+Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.gz
 Patch0:		dvdstyler-genisoimage.patch
+# Fix ffmpeg detection and usage for MDV layout - AdamW 2008/06
+Patch1:		dvdstyler-1.6.2-ffmpeg.patch
 URL:		http://dvdstyler.sourceforge.net/
 License:	GPL+
 Group:		Video
 BuildRoot:	%{_tmppath}/%{name}-buildroot
-BuildRequires:	pkgconfig ImageMagick
-BuildRequires:	wxsvg-devel >= 1.0-0.beta6
-BuildRequires:	kdelibs-common libgnomeui2-devel automake
-BuildRequires:	dvdauthor mjpegtools netpbm mpgtx dvd+rw-tools
-Requires:	dvdauthor mjpegtools netpbm mpgtx dvd+rw-tools
+BuildRequires:	pkgconfig
+BuildRequires:	ImageMagick
+BuildRequires:	wxsvg-devel >= 1.0-0.beta10
+BuildRequires:	kdelibs-common
+BuildRequires:	libgnomeui2-devel
+BuildRequires:	dvdauthor
+BuildRequires:	mjpegtools
+BuildRequires:	netpbm
+BuildRequires:	mpgtx
+BuildRequires:	dvd+rw-tools
 BuildRequires:	mkisofs
-Requires:	mkisofs
-BuildRequires:	gettext desktop-file-utils
+BuildRequires:	gettext
+BuildRequires:	desktop-file-utils
 Buildrequires:	libexif-devel
+BuildRequires:	ffmpeg-devel
+Requires:	dvdauthor
+Requires:	mjpegtools
+Requires:	netpbm
+Requires:	mpgtx
+Requires:	dvd+rw-tools
+Requires:	mkisofs
 
 %description
-The main DVDStyler features are:
+DVDstyler is a DVD authoring program. The main DVDStyler features are:
     * you can drag and drop MPEG files directly
     * you can import image file for background
     * you can create NTSC/PAL menu
@@ -36,9 +47,10 @@ The main DVDStyler features are:
     * you can change post command for each movie
 
 %prep
-%setup -q -n DVDStyler-%{version}_%{relindex}
+%setup -q -n %{oname}-%{version}
 %patch0 -p1
-#needed by patch0
+%patch1 -p1 -b .ffmpeg
+#needed by patch0 and patch1
 ./autogen.sh
 
 %build
@@ -46,16 +58,16 @@ The main DVDStyler features are:
 pushd locale
 for i in *.po; do msgconv -t UTF-8 $i -o $i.new; mv -f $i.new $i; done
 popd
-%configure2_5x --prefix=%_libdir --with-wx-config=%_bindir/wx-config-ansi
+%configure2_5x --prefix=%{_libdir} --with-wx-config=%{_bindir}/wx-config-ansi
 %make
 										
 %install
 rm -rf %{buildroot}
 %makeinstall_std
-rm -fr %buildroot/%{_docdir}
+rm -fr %{buildroot}/%{_docdir}
 
 desktop-file-install --vendor='' \
-	--dir=%buildroot%_datadir/applications \
+	--dir=%buildroot%{_datadir}/applications \
 	--remove-category='Application' \
 	--add-category='Video;AudioVideoEditing' \
 	%{buildroot}%{_datadir}/applications/*.desktop
