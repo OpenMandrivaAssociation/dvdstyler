@@ -2,13 +2,11 @@
 
 Name: 	 	dvdstyler
 Summary: 	DVD authoring application
-Version: 	1.6.2
+Version: 	1.7.0
 Release: 	%mkrel 1
 Epoch:		1
-Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.bz2
 Patch0:		dvdstyler-genisoimage.patch
-# Fix ffmpeg detection and usage for MDV layout - AdamW 2008/06
-Patch1:		dvdstyler-1.6.2-ffmpeg.patch
 URL:		http://dvdstyler.sourceforge.net/
 License:	GPL+
 Group:		Video
@@ -30,8 +28,6 @@ Buildrequires:	libexif-devel
 BuildRequires:	ffmpeg-devel
 Requires:	dvdauthor
 Requires:	mjpegtools
-Requires:	netpbm
-Requires:	mpgtx
 Requires:	dvd+rw-tools
 Requires:	mkisofs
 
@@ -49,8 +45,7 @@ DVDstyler is a DVD authoring program. The main DVDStyler features are:
 %prep
 %setup -q -n %{oname}-%{version}
 %patch0 -p1
-%patch1 -p1 -b .ffmpeg
-#needed by patch0 and patch1
+#needed by patch0
 ./autogen.sh
 
 %build
@@ -67,7 +62,7 @@ rm -rf %{buildroot}
 rm -fr %{buildroot}/%{_docdir}
 
 desktop-file-install --vendor='' \
-	--dir=%buildroot%{_datadir}/applications \
+	--dir=%{buildroot}%{_datadir}/applications \
 	--remove-category='Application' \
 	--add-category='Video;AudioVideoEditing' \
 	%{buildroot}%{_datadir}/applications/*.desktop
@@ -99,6 +94,7 @@ rm -rf %{buildroot}
 %doc AUTHORS ChangeLog README TODO
 %{_bindir}/%{name}
 %{_datadir}/%{name}
+%{_mandir}/man1/%{name}.1*
 %{_datadir}/applications/*.desktop
 %{_datadir}/pixmaps/*.png
 %{_iconsdir}/hicolor/48x48/apps/%{name}.png
