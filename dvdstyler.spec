@@ -2,8 +2,8 @@
 
 Name: 	 	dvdstyler
 Summary: 	DVD authoring application
-Version: 	1.7.0
-Release: 	%mkrel 2
+Version: 	1.7.1
+Release: 	%mkrel 1
 Epoch:		1
 Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.bz2
 Patch0:		dvdstyler-genisoimage.patch
@@ -11,15 +11,11 @@ URL:		http://dvdstyler.sourceforge.net/
 License:	GPL+
 Group:		Video
 BuildRoot:	%{_tmppath}/%{name}-buildroot
-BuildRequires:	pkgconfig
 BuildRequires:	ImageMagick
-BuildRequires:	wxsvg-devel >= 1.0-0.beta10
-BuildRequires:	kdelibs-common
+BuildRequires:	wxsvg-devel >= 1.0-1mdv
 BuildRequires:	libgnomeui2-devel
 BuildRequires:	dvdauthor
-BuildRequires:	mjpegtools
 BuildRequires:	netpbm
-BuildRequires:	mpgtx
 BuildRequires:	dvd+rw-tools
 BuildRequires:	mkisofs
 BuildRequires:	gettext
