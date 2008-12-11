@@ -11,7 +11,7 @@ URL:		http://dvdstyler.sourceforge.net/
 License:	GPL+
 Group:		Video
 BuildRoot:	%{_tmppath}/%{name}-buildroot
-BuildRequires:	ImageMagick
+BuildRequires:	imagemagick
 BuildRequires:	wxsvg-devel >= 1.0-1mdv
 BuildRequires:	libgnomeui2-devel
 BuildRequires:	dvdauthor
