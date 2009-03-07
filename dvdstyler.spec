@@ -2,7 +2,7 @@
 
 Name: 	 	dvdstyler
 Summary: 	DVD authoring application
-Version: 	1.7.1
+Version: 	1.7.2
 Release: 	%mkrel 1
 Epoch:		1
 Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.bz2
@@ -22,6 +22,7 @@ BuildRequires:	gettext
 BuildRequires:	desktop-file-utils
 Buildrequires:	libexif-devel
 BuildRequires:	ffmpeg-devel
+BuildRequires:	xmlto
 Requires:	dvdauthor
 Requires:	mjpegtools
 Requires:	dvd+rw-tools
@@ -49,6 +50,7 @@ DVDstyler is a DVD authoring program. The main DVDStyler features are:
 pushd locale
 for i in *.po; do msgconv -t UTF-8 $i -o $i.new; mv -f $i.new $i; done
 popd
+%define Werror_cflags %nil
 %configure2_5x --prefix=%{_libdir} --with-wx-config=%{_bindir}/wx-config-ansi
 %make
 										
