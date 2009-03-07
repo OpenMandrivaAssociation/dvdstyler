@@ -23,6 +23,7 @@ BuildRequires:	desktop-file-utils
 Buildrequires:	libexif-devel
 BuildRequires:	ffmpeg-devel
 BuildRequires:	xmlto
+BuildRequires:	zip
 Requires:	dvdauthor
 Requires:	mjpegtools
 Requires:	dvd+rw-tools
