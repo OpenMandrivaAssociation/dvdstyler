@@ -2,7 +2,7 @@
 
 Name: 	 	dvdstyler
 Summary: 	DVD authoring application
-Version: 	1.7.2
+Version: 	1.7.3
 Release: 	%mkrel 1
 Epoch:		1
 Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.bz2
