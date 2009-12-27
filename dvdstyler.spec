@@ -1,11 +1,12 @@
 %define oname	DVDStyler
+%define srcname 1.7.4_3
 
 Name: 	 	dvdstyler
 Summary: 	DVD authoring application
-Version: 	1.7.3
-Release: 	%mkrel 2
+Version: 	1.7.4
+Release: 	%mkrel 1
 Epoch:		1
-Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.bz2
+Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{srcname}.tar.bz2
 Patch0:		dvdstyler-genisoimage.patch
 URL:		http://dvdstyler.sourceforge.net/
 License:	GPL+
@@ -41,7 +42,7 @@ DVDstyler is a DVD authoring program. The main DVDStyler features are:
     * you can change post command for each movie
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -q -n %{oname}-%{srcname}
 %patch0 -p1
 #needed by patch0
 ./autogen.sh
@@ -70,6 +71,10 @@ mkdir -p %{buildroot}/%{_iconsdir}/hicolor/{48x48,32x32,16x16}/apps
 convert -size 48x48 src/rc/%{name}.png %{buildroot}/%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 convert -size 32x32 src/rc/%{name}.png %{buildroot}/%{_iconsdir}/hicolor/32x32/apps/%{name}.png
 convert -size 16x16 src/rc/%{name}.png %{buildroot}/%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+
+#remove duplicate files
+rm -fr %{buildroot}/%{_libdir}/share/doc/dvdstyler/
+
 
 %find_lang %{name}
 
