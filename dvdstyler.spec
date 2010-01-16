@@ -4,7 +4,7 @@
 Name: 	 	dvdstyler
 Summary: 	DVD authoring application
 Version: 	1.7.4
-Release: 	%mkrel 1
+Release: 	%mkrel 2
 Epoch:		1
 Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{srcname}.tar.bz2
 Patch0:		dvdstyler-genisoimage.patch
