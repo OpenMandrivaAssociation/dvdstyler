@@ -1,15 +1,14 @@
 %define oname	DVDStyler
-%define srcname 1.7.4_3
 
 Name: 	 	dvdstyler
 Summary: 	DVD authoring application
-Version: 	1.7.4
-Release: 	%mkrel 2
+Version: 	1.8.0.2
+Release: 	%mkrel 1
 Epoch:		1
-Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{srcname}.tar.bz2
+Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.bz2
 Patch0:		dvdstyler-genisoimage.patch
 URL:		http://dvdstyler.sourceforge.net/
-License:	GPL+
+License:	GPLv2+
 Group:		Video
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	imagemagick
@@ -42,10 +41,10 @@ DVDstyler is a DVD authoring program. The main DVDStyler features are:
     * you can change post command for each movie
 
 %prep
-%setup -q -n %{oname}-%{srcname}
-%patch0 -p1
+%setup -q -n %{oname}-%{version}
+#%patch0 -p1
 #needed by patch0
-./autogen.sh
+#./autogen.sh
 
 %build
 # Convert .po files to UTF-8: bug #31297 - AdamW 2007/06
