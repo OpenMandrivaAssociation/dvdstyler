@@ -24,6 +24,7 @@ Buildrequires:	libexif-devel
 BuildRequires:	ffmpeg-devel
 BuildRequires:	xmlto
 BuildRequires:	zip
+BuildRequires:	bison
 Requires:	dvdauthor
 Requires:	mjpegtools
 Requires:	dvd+rw-tools
