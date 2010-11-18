@@ -25,6 +25,7 @@ BuildRequires:	ffmpeg-devel
 BuildRequires:	xmlto
 BuildRequires:	zip
 BuildRequires:	bison
+BuildRequires:	flex
 Requires:	dvdauthor
 Requires:	mjpegtools
 Requires:	dvd+rw-tools
