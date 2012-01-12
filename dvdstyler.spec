@@ -1,20 +1,22 @@
-%define oname	DVDStyler
+%define		oname	DVDStyler
 
-Name: 	 	dvdstyler
-Summary: 	DVD authoring application
-Version: 	1.8.1
-Release: 	%mkrel 1
+Name:		dvdstyler
+Summary:	DVD authoring application
+Version:	2.1
+Release:	1
 Epoch:		1
 Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.bz2
-Patch0:		dvdstyler-genisoimage.patch
+Patch0:		DVDStyler-2.1b2-ffmpeg0.8.patch
+Patch1:		DVDStyler-2.1-ljpeg.patch
 URL:		http://dvdstyler.sourceforge.net/
 License:	GPLv2+
 Group:		Video
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	imagemagick
-BuildRequires:	wxsvg-devel >= 1.0-1mdv
-BuildRequires:	libgnomeui2-devel
-BuildRequires:	dvdauthor
+BuildRequires:	wxsvg-devel >= 1.1.5
+BuildRequires:	wxgtku2.8-devel
+BuildRequires:	pkgconfig(libgnomeui-2.0)
+BuildRequires:	dvdauthor >= 0.7.0
 BuildRequires:	netpbm
 BuildRequires:	dvd+rw-tools
 BuildRequires:	mkisofs
@@ -44,23 +46,18 @@ DVDstyler is a DVD authoring program. The main DVDStyler features are:
 
 %prep
 %setup -q -n %{oname}-%{version}
-#%patch0 -p1
-#needed by patch0
-#./autogen.sh
+%patch0 -p1
+%patch1 -p1
+#fix desktop file
+%__sed -i -e 's,%{name}.png,%{name},g' data/dvdstyler.desktop
 
 %build
-# Convert .po files to UTF-8: bug #31297 - AdamW 2007/06
-pushd locale
-for i in *.po; do msgconv -t UTF-8 $i -o $i.new; mv -f $i.new $i; done
-popd
-%define Werror_cflags %nil
-%configure2_5x --prefix=%{_libdir} --with-wx-config=%{_bindir}/wx-config-ansi
+%configure2_5x --with-wx-config=%{_bindir}/wx-config-unicode
 %make
-										
+
 %install
-rm -rf %{buildroot}
 %makeinstall_std
-rm -fr %{buildroot}/%{_docdir}
+%__rm -fr %{buildroot}%{_docdir}
 
 desktop-file-install --vendor='' \
 	--dir=%{buildroot}%{_datadir}/applications \
@@ -68,34 +65,17 @@ desktop-file-install --vendor='' \
 	--add-category='Video;AudioVideoEditing' \
 	%{buildroot}%{_datadir}/applications/*.desktop
 
-mkdir -p %{buildroot}/%{_iconsdir}/hicolor/{48x48,32x32,16x16}/apps
-convert -size 48x48 src/rc/%{name}.png %{buildroot}/%{_iconsdir}/hicolor/48x48/apps/%{name}.png
-convert -size 32x32 src/rc/%{name}.png %{buildroot}/%{_iconsdir}/hicolor/32x32/apps/%{name}.png
-convert -size 16x16 src/rc/%{name}.png %{buildroot}/%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+%__mkdir_p %{buildroot}%{_iconsdir}/hicolor/{48x48,32x32,16x16}/apps
+convert -size 48x48 src/rc/%{name}.png %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
+convert -size 32x32 src/rc/%{name}.png %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+convert -size 16x16 src/rc/%{name}.png %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
 
 #remove duplicate files
-rm -fr %{buildroot}/%{_libdir}/share/doc/dvdstyler/
-
+%__rm -fr %{buildroot}%{_libdir}/share/doc/dvdstyler/
 
 %find_lang %{name}
 
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post
-%update_menus
-%update_icon_cache hicolor
-%endif
-		
-%if %mdkversion < 200900
-%postun
-%clean_menus
-%clean_icon_cache hicolor
-%endif
-
 %files -f %{name}.lang
-%defattr(-,root,root)
 %doc AUTHORS ChangeLog README TODO
 %{_bindir}/%{name}
 %{_datadir}/%{name}
