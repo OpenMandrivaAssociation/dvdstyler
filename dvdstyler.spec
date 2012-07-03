@@ -1,19 +1,18 @@
 %define		oname	DVDStyler
+%define		prerel	rc1
 
 Name:		dvdstyler
 Summary:	DVD authoring application
-Version:	2.1
-Release:	1
+Version:	2.3
+Release:	%{?preprel:0.%{prerel}.}1
 Epoch:		1
-Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.bz2
-Patch0:		DVDStyler-2.1b2-ffmpeg0.8.patch
+Source0:	http://downloads.sourceforge.net/project/dvdstyler/%{name}%{?prerel:-devel}/-%{version}%{?prerel}/%{oname}-%{version}%{?prerel}.tar.bz2
 Patch1:		DVDStyler-2.1-ljpeg.patch
 URL:		http://dvdstyler.sourceforge.net/
 License:	GPLv2+
 Group:		Video
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	imagemagick
-BuildRequires:	wxsvg-devel >= 1.1.5
+BuildRequires:	wxsvg-devel >= 1.1.9
 BuildRequires:	wxgtku2.8-devel
 BuildRequires:	pkgconfig(libgnomeui-2.0)
 BuildRequires:	dvdauthor >= 0.7.0
@@ -28,6 +27,7 @@ BuildRequires:	xmlto
 BuildRequires:	zip
 BuildRequires:	bison
 BuildRequires:	flex
+BuildRequires:	ffmpeg
 Requires:	dvdauthor
 Requires:	mjpegtools
 Requires:	dvd+rw-tools
@@ -45,8 +45,7 @@ DVDstyler is a DVD authoring program. The main DVDStyler features are:
     * you can change post command for each movie
 
 %prep
-%setup -q -n %{oname}-%{version}
-%patch0 -p1
+%setup -q -n %{oname}-%{version}%{?prerel}
 %patch1 -p1
 #fix desktop file
 %__sed -i -e 's,%{name}.png,%{name},g' data/dvdstyler.desktop
