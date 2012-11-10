@@ -1,0 +1,12 @@
+diff -urN DVDStyler-2.1/src/Makefile.in DVDStyler-2.1-patched/src/Makefile.in
+--- DVDStyler-2.1/src/Makefile.in	2011-12-22 08:34:37.000000000 +1100
++++ DVDStyler-2.1-patched/src/Makefile.in	2012-01-12 23:59:11.113489593 +1100
+@@ -166,7 +166,7 @@
+ LIBEXIF_CFLAGS = @LIBEXIF_CFLAGS@
+ LIBEXIF_LIBS = @LIBEXIF_LIBS@
+ LIBOBJS = @LIBOBJS@
+-LIBS = @LIBS@
++LIBS = @LIBS@ -ljpeg
+ LIBUDEV_CFLAGS = @LIBUDEV_CFLAGS@
+ LIBUDEV_LIBS = @LIBUDEV_LIBS@
+ LN_S = @LN_S@
