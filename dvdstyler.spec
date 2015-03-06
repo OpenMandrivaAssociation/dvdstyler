@@ -2,8 +2,8 @@
 
 Name:		dvdstyler
 Summary:	DVD authoring application
-Version:	2.8
-Release:	2
+Version:	2.9.2
+Release:	1
 Epoch:		1
 Source0:	http://sourceforge.net/projects/dvdstyler/files/%{name}/%{version}/%{oname}-%{version}.tar.bz2
 URL:		http://dvdstyler.sourceforge.net/
