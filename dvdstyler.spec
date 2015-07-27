@@ -24,7 +24,6 @@ BuildRequires:	zip
 BuildRequires:	ffmpeg-devel
 BuildRequires:	wxgtku2.8-devel
 BuildRequires:	pkgconfig(libexif)
-BuildRequires:	pkgconfig(libgnomeui-2.0)
 BuildRequires:	pkgconfig(libwxsvg) >= 1.1.14
 BuildRequires:	pkgconfig(udev)
 
