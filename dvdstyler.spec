@@ -1,4 +1,5 @@
 %define oname DVDStyler
+%define _disable_rebuild_configure 1
 
 Name:		dvdstyler
 Summary:	DVD authoring application
